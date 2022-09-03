@@ -5,6 +5,9 @@ import xlrd
 import datetime
 import pandas as pd
 
+
+
+
 dow = [
     'ПОНЕДЕЛЬНИК',
     'ВТОРНИК',
@@ -16,7 +19,9 @@ dow = [
 ]
 
 def get_rasp_file():
-    r = requests.get("https://www.mirea.ru/schedule/").content.decode(encoding="utf-8")
+    proxies = {"http": "http://88.212.232.212:7497" }
+
+    r = requests.get("https://www.mirea.ru/schedule/", proxies=proxies).content.decode(encoding="utf-8")
     course = 4
     r = r.split("Институт кибербезопасности и цифровых технологий")[1]
 
@@ -26,7 +31,7 @@ def get_rasp_file():
         tokenizedLinks[i] = untokenizedLinks[i].split("href")[1].split('"')[1]
 
     url = tokenizedLinks[course]
-    r = requests.get(url, allow_redirects=True)
+    r = requests.get(url, proxies = {"http": "http://88.212.232.212:7497" }, allow_redirects=True)
     open('rasp.xls', 'wb').write(r.content)
 
 def get_rasp_position():
@@ -103,6 +108,7 @@ st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
 st.markdown(""" <style> 
     .font {font-size:10px;} 
 </style> """, unsafe_allow_html=True)
+
 
 
 
