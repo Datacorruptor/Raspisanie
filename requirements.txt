@@ -1,0 +1,5 @@
+streamlit
+requests
+xlrd
+datetime
+pandas
